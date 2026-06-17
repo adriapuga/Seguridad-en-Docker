@@ -1,0 +1,29 @@
+services:
+  juiceshop:
+    image: bkimminich/juice-shop
+    container_name: juiceshop
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    networks:
+      - lab-net
+
+  vuln-container:
+    image: ubuntu:22.04
+    container_name: vuln-container
+    command: sleep infinity
+    restart: unless-stopped
+    user: "1000:1000"
+    read_only: true
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
+    security_opt:
+      - no-new-privileges
+    networks:
+      - lab-net
+
+networks:
+  lab-net:
+    driver: bridge
