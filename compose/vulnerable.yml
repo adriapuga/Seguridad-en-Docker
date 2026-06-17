@@ -1,1 +1,26 @@
+services:
+  juiceshop:
+    image: bkimminich/juice-shop
+    container_name: juiceshop
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    networks:
+      - lab-net
 
+  vuln-container:
+    image: ubuntu:22.04
+    container_name: vuln-container
+    command: sleep infinity
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock   # [MAL] Misconfiguración 1
+    privileged: true                                 # [MAL] Misconfiguración 2
+    cap_add:
+      - ALL                                          # [MAL] Misconfiguración 3
+    networks:
+      - lab-net
+
+networks:
+  lab-net:
+    driver: bridge
