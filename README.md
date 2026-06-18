@@ -1,4 +1,4 @@
-# Docker Security Lab
+# Seguridad En Docker
 
 > Laboratorio práctico de seguridad de contenedores Docker: explotación de
 > misconfiguraciones, container escape y hardening defensivo en un entorno
